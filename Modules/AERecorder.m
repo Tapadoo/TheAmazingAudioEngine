@@ -129,4 +129,14 @@ static void audioCallback(id                        receiver,
     return audioCallback;
 }
 
+/* ##### Tapadoo Additions ##### */
+- (BOOL)prepareRecordingToFileAtPath:(NSString*)path fileType:(AudioFileTypeID)fileType error:(NSError**)error {
+    BOOL result = [_writer createFileAtPath:path fileType:fileType error:error];
+    return result;
+}
+void AERecorderStartRecording(AERecorder *THIS){
+    THIS->_recording = YES;
+}
+
+
 @end

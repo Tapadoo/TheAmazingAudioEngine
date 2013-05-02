@@ -75,4 +75,11 @@ extern NSString * kAERecorderErrorKey;
  * The path
  */
 @property (nonatomic, retain, readonly) NSString *path;
+
+
+/* ##### Tapadoo Additions ##### */
+- (BOOL)prepareRecordingToFileAtPath:(NSString*)path fileType:(AudioFileTypeID)fileType error:(NSError**)error;
+void AERecorderStartRecording(AERecorder *THIS);
+
 @end
+
