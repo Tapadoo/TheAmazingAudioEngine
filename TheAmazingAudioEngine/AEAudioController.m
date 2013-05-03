@@ -3308,6 +3308,45 @@ static void serveAudiobusInputQueue(AEAudioController *THIS) {
     if ( result == noErr && _currentBufferDuration != bufferDuration ) self.currentBufferDuration = bufferDuration;
 }
 
+void AEChannelSetPlaying(AEAudioController *THIS,id<AEAudioPlayable> channel,BOOL playing){
+    AEChannelGroupRef group = THIS->_topGroup;
+    AEChannelRef channelRef;
+    int index = -1;
+    for ( int i=0; i < group->channelCount; i++ ) {
+        channelRef = group->channels[i];
+        if ( !channelRef ) continue;
+        if ( channelRef->object == channel ) {
+            index = i;
+            break;
+        }
+    }
+
+    AudioUnitParameterValue value = playing;
+    if ( group->mixerAudioUnit ) {
+        OSStatus result = AudioUnitSetParameter(group->mixerAudioUnit, kMultiChannelMixerParam_Enable, kAudioUnitScope_Input, index, value, 0);
+        checkResult(result, "AudioUnitSetParameter(kMultiChannelMixerParam_Enable)");
+    }
+    
+    channelRef->playing = value;
+    group->channels[index]->playing = value;
+//    AEAudioControllerSendAsynchronousMessageToMainThread(THIS, AEAudioPlayableCompletionCallSetupHandler, &(struct audioPlayableArg) {.audioUnitFilePlayer = channel}, sizeof(struct audioPlayableArg));
+}
+
+void AEChannelSetPlayingAtIndex(AEAudioController *THIS,int index,BOOL playing){
+    AEChannelGroupRef group = THIS->_topGroup;
+    AEChannelRef channelRef = group->channels[index];
+    
+    AudioUnitParameterValue value = playing;
+    if ( group->mixerAudioUnit ) {
+        OSStatus result = AudioUnitSetParameter(group->mixerAudioUnit, kMultiChannelMixerParam_Enable, kAudioUnitScope_Input, index, value, 0);
+        checkResult(result, "AudioUnitSetParameter(kMultiChannelMixerParam_Enable)");
+    }
+    
+    channelRef->playing = value;
+    group->channels[index]->playing = value;
+    //    AEAudioControllerSendAsynchronousMessageToMainThread(THIS, AEAudioPlayableCompletionCallSetupHandler, &(struct audioPlayableArg) {.audioUnitFilePlayer = channel}, sizeof(struct audioPlayableArg));
+}
+
 @end
 
 #pragma mark -
