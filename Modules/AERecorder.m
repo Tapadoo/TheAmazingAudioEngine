@@ -33,7 +33,6 @@ NSString * AERecorderDidEncounterErrorNotification = @"AERecorderDidEncounterErr
 NSString * kAERecorderErrorKey = @"error";
 
 @interface AERecorder () {
-    BOOL _recording;
     AudioBufferList *_buffer;
 }
 @property (nonatomic, retain) AEMixerBuffer *mixer;
