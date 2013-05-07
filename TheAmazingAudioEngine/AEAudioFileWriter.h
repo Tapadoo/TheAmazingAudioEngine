@@ -108,6 +108,5 @@ OSStatus AEAudioFileWriterAddAudioSynchronously(AEAudioFileWriter* writer, Audio
 
 /* ##### Tapadoo Additions ##### */
 - (BOOL)createFileAtPath:(NSString*)path fileType:(AudioFileTypeID)fileType error:(NSError**)error;
-void AEAudioFileWriterStartWriting(AEAudioFileWriter* THIS);
 
 @end

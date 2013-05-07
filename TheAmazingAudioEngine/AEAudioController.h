@@ -1291,7 +1291,6 @@ NSTimeInterval AEAudioControllerInputLatency(AEAudioController *controller);
  */
 NSTimeInterval AEAudioControllerOutputLatency(AEAudioController *controller);
 
-void AEChannelSetPlaying(AEAudioController *THIS,id<AEAudioPlayable> channel,BOOL playing);
 void AEChannelSetPlayingAtIndex(AEAudioController *THIS,int index,BOOL playing);
 
 @end

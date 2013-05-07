@@ -190,7 +190,7 @@ static inline BOOL _checkResult(OSStatus result, const char *operation, const ch
             return NO;
         }
     }
-    
+
     // Set up the converter
     status = ExtAudioFileSetProperty(_audioFile, kExtAudioFileProperty_ClientDataFormat, sizeof(AudioStreamBasicDescription), &_audioDescription);
     if ( !checkResult(status, "ExtAudioFileSetProperty(kExtAudioFileProperty_ClientDataFormat") ) {
@@ -203,11 +203,11 @@ static inline BOOL _checkResult(OSStatus result, const char *operation, const ch
         return NO;
     }
     
-    // Init the async file writing mechanism
-    checkResult(ExtAudioFileWriteAsync(_audioFile, 0, NULL), "ExtAudioFileWriteAsync");
-    
     self.path = path;
     _writing = YES;
+
+    // Init the async file writing mechanism
+    checkResult(ExtAudioFileWriteAsync(_audioFile, 0, NULL), "ExtAudioFileWriteAsync");
     
     return YES;
 }
@@ -319,7 +319,7 @@ OSStatus AEAudioFileWriterAddAudioSynchronously(AEAudioFileWriter* THIS, AudioBu
             return NO;
         }
     }
-    
+
     // Set up the converter
     status = ExtAudioFileSetProperty(_audioFile, kExtAudioFileProperty_ClientDataFormat, sizeof(AudioStreamBasicDescription), &_audioDescription);
     if ( !checkResult(status, "ExtAudioFileSetProperty(kExtAudioFileProperty_ClientDataFormat") ) {
@@ -332,18 +332,13 @@ OSStatus AEAudioFileWriterAddAudioSynchronously(AEAudioFileWriter* THIS, AudioBu
         return NO;
     }
     
-    //    // Init the async file writing mechanism
-    //    checkResult(ExtAudioFileWriteAsync(_audioFile, 0, NULL), "ExtAudioFileWriteAsync");
-    AEAudioFileWriterStartWriting(self);
-    
     self.path = path;
     _writing = YES;
-    
-    return YES;
-}
-void AEAudioFileWriterStartWriting(AEAudioFileWriter* THIS){
+
     // Init the async file writing mechanism
-    checkResult(ExtAudioFileWriteAsync(THIS->_audioFile, 0, NULL), "ExtAudioFileWriteAsync");
+    checkResult(ExtAudioFileWriteAsync(_audioFile, 0, NULL), "ExtAudioFileWriteAsync()");
+
+    return YES;
 }
 
 
