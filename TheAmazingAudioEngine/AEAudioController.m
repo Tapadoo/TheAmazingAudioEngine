@@ -801,14 +801,10 @@ static OSStatus topRenderNotifyCallback(void *inRefCon, AudioUnitRenderActionFla
         _audioGraph = NULL;
     }
     
-    self.housekeepingTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(housekeeping) userInfo:nil repeats:YES];
-    
     return self;
 }
 
 - (void)dealloc {
-    [_housekeepingTimer invalidate];
-    self.housekeepingTimer = nil;
     
     self.lastError = nil;
     
@@ -908,6 +904,8 @@ static OSStatus topRenderNotifyCallback(void *inRefCon, AudioUnitRenderActionFla
         }
     }
     
+    self.housekeepingTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(housekeeping) userInfo:nil repeats:YES];
+
     return !hasError;
 }
 
@@ -934,6 +932,8 @@ static OSStatus topRenderNotifyCallback(void *inRefCon, AudioUnitRenderActionFla
         [_pollThread release];
         _pollThread = nil;
     }
+    [_housekeepingTimer invalidate];
+    self.housekeepingTimer = nil;
 }
 
 #pragma mark - Channel and channel group management
