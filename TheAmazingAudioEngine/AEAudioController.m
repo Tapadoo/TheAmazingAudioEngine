@@ -3312,16 +3312,10 @@ void AEChannelSetPlayingAtIndex(AEAudioController *THIS,int index,BOOL playing){
     AudioUnitParameterValue value = playing;
     AEChannelGroupRef group = THIS->_topGroup;
     group->channels[index]->playing = value;
-
-    AEChannelRef channelRef = group->channels[index];
-    channelRef->playing = value;
-
     if ( group->mixerAudioUnit ) {
         OSStatus result = AudioUnitSetParameter(group->mixerAudioUnit, kMultiChannelMixerParam_Enable, kAudioUnitScope_Input, index, value, 0);
         checkResult(result, "AudioUnitSetParameter(kMultiChannelMixerParam_Enable)");
     }
-
-    //    AEAudioControllerSendAsynchronousMessageToMainThread(THIS, AEAudioPlayableCompletionCallSetupHandler, &(struct audioPlayableArg) {.audioUnitFilePlayer = channel}, sizeof(struct audioPlayableArg));
 }
 
 @end
