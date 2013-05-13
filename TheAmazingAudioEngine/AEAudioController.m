@@ -3318,6 +3318,25 @@ void AEChannelSetPlayingAtIndex(AEAudioController *THIS,int index,BOOL playing){
     }
 }
 
+void AEChannelSetAllPlaying(AEAudioController *THIS,BOOL playing){
+    AudioUnitParameterValue value = playing;
+    AEChannelGroupRef group = THIS->_topGroup;
+    int size = 100;
+    for (int i=0;i<100;i++){
+        if (group->channels[i]){
+            group->channels[i]->playing = value;
+        }
+    }
+    if ( group->mixerAudioUnit ) {
+        for (int i=0;i<size;i++){
+            if (group->channels[i]){
+                OSStatus result = AudioUnitSetParameter(group->mixerAudioUnit, kMultiChannelMixerParam_Enable, kAudioUnitScope_Input, i, value, 0);
+                checkResult(result, "AudioUnitSetParameter(kMultiChannelMixerParam_Enable)");
+            }
+        }
+    }
+}
+
 @end
 
 #pragma mark -
