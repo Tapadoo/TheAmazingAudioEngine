@@ -3374,4 +3374,4 @@ void AEChannelSetAllPlaying(AEAudioController *THIS,BOOL playing){
         usleep(_pollInterval*1.0e6);
     }
 }
-@end
+@end    
