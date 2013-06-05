@@ -852,6 +852,11 @@ static OSStatus topRenderNotifyCallback(void *inRefCon, AudioUnitRenderActionFla
     }
     free(_inputCallbacks);
     
+    if(_inputAudioBufferList) {
+        AEFreeAudioBufferList(_inputAudioBufferList);
+    }
+    _inputAudioBufferList = NULL;
+    
     [super dealloc];
 }
 
