@@ -2712,7 +2712,7 @@ NSTimeInterval AEAudioControllerOutputLatency(AEAudioController *controller) {
                 }
                 
                 // Set the mixer unit to handle up to 4096 frames per slice to keep rendering during screen lock
-                UInt32 maxFPS = 4096;
+                UInt32 maxFPS = 256;//4096;
                 AudioUnitSetProperty(subgroup->mixerAudioUnit, kAudioUnitProperty_MaximumFramesPerSlice, kAudioUnitScope_Global, 0, &maxFPS, sizeof(maxFPS));
             }
             

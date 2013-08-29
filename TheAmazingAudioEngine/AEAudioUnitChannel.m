@@ -111,7 +111,7 @@ static inline BOOL _checkResult(OSStatus result, const char *operation, const ch
     }
      
     // Attempt to set the max frames per slice
-    UInt32 maxFPS = 4096;
+    UInt32 maxFPS = 256;// 4096;
     AudioUnitSetProperty(_audioUnit, kAudioUnitProperty_MaximumFramesPerSlice, kAudioUnitScope_Global, 0, &maxFPS, sizeof(maxFPS));
     
     checkResult(AUGraphUpdate(_audioGraph, NULL), "AUGraphUpdate");
