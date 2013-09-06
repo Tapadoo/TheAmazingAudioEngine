@@ -35,7 +35,7 @@ static inline BOOL _checkResult(OSStatus result, const char *operation, const ch
     return YES;
 }
 
-static const int kIncrementalLoadBufferSize = 4096;
+static const int kIncrementalLoadBufferSize = 256;// 4096;
 
 @interface AEAudioFileLoaderOperation ()
 @property (nonatomic, retain) NSURL *url;
